@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{6256FEF2-F560-47EA-BDE2-6DE92738B29D}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="VLC_DataSnap_REST.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D_FMX_REST_Client\FMX_REST_Client.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="REST_Service\REST_Service.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="VLC_DataSnap_REST">
+        <MSBuild Projects="VLC_DataSnap_REST.dproj"/>
+    </Target>
+    <Target Name="VLC_DataSnap_REST:Clean">
+        <MSBuild Projects="VLC_DataSnap_REST.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VLC_DataSnap_REST:Make">
+        <MSBuild Projects="VLC_DataSnap_REST.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="FMX_REST_Client">
+        <MSBuild Projects="D_FMX_REST_Client\FMX_REST_Client.dproj"/>
+    </Target>
+    <Target Name="FMX_REST_Client:Clean">
+        <MSBuild Projects="D_FMX_REST_Client\FMX_REST_Client.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FMX_REST_Client:Make">
+        <MSBuild Projects="D_FMX_REST_Client\FMX_REST_Client.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="REST_Service">
+        <MSBuild Projects="REST_Service\REST_Service.dproj"/>
+    </Target>
+    <Target Name="REST_Service:Clean">
+        <MSBuild Projects="REST_Service\REST_Service.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="REST_Service:Make">
+        <MSBuild Projects="REST_Service\REST_Service.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="VLC_DataSnap_REST;FMX_REST_Client;REST_Service"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="VLC_DataSnap_REST:Clean;FMX_REST_Client:Clean;REST_Service:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="VLC_DataSnap_REST:Make;FMX_REST_Client:Make;REST_Service:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
