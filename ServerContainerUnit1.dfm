@@ -10,8 +10,8 @@ object ServerContainer1: TServerContainer1
     OnUserAuthenticate = DSAuthenticationManager1UserAuthenticate
     OnUserAuthorize = DSAuthenticationManager1UserAuthorize
     Roles = <>
-    Left = 96
-    Top = 197
+    Left = 88
+    Top = 93
   end
   object DSServerClass1: TDSServerClass
     OnGetClass = DSServerClass1GetClass

@@ -15,11 +15,13 @@ type
     Label1: TLabel;
     ApplicationEvents1: TApplicationEvents;
     ButtonOpenBrowser: TButton;
+    chbBasicAuth: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
     procedure ButtonStartClick(Sender: TObject);
     procedure ButtonStopClick(Sender: TObject);
     procedure ButtonOpenBrowserClick(Sender: TObject);
+    procedure chbBasicAuthClick(Sender: TObject);
   private
     FServer: TIdHTTPWebBrokerBridge;
 
@@ -38,7 +40,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Winapi.Windows, Winapi.ShellApi, Datasnap.DSSession;
+  Winapi.Windows, Winapi.ShellApi, Datasnap.DSSession, ServerContainerUnit1;
 
 procedure TForm1.ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
 begin
@@ -74,9 +76,15 @@ begin
   FServer.Bindings.Clear;
 end;
 
+procedure TForm1.chbBasicAuthClick(Sender: TObject);
+begin
+  isBasicAuth := chbBasicAuth.Checked;
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Initialized;
+  StartServer;
 end;
 
 procedure TForm1.StartServer;

@@ -8,7 +8,7 @@ uses System.SysUtils, System.Classes,
   Datasnap.DSProxyJavaAndroid, Datasnap.DSProxyJavaBlackBerry,
   Datasnap.DSProxyObjectiveCiOS, Datasnap.DSProxyCsharpSilverlight,
   Datasnap.DSProxyFreePascal_iOS,
-  Datasnap.DSAuth;
+  Datasnap.DSAuth, IPPeerServer, System.JSON, Data.DBXCommon, Datasnap.DSHTTP;
 
 type
   TServerContainer1 = class(TDataModule)
@@ -22,12 +22,17 @@ type
     procedure DSAuthenticationManager1UserAuthenticate(Sender: TObject;
       const Protocol, Context, User, Password: string; var valid: Boolean;
       UserRoles: TStrings);
+
   private
     { Private declarations }
   public
+
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
   end;
+
+var
+  isBasicAuth: Boolean;
 
 function DSServer: TDSServer;
 function DSAuthenticationManager: TDSAuthenticationManager;
@@ -85,10 +90,16 @@ begin
   session := TDSSessionManager.GetThreadSession;
   session.PutData('username', User);
 
+  // Authentication Method : BASIC => 帳號 密碼
+
   if User.Equals('admin') and Password.Equals('1234') then
     valid := True
   else
     valid := false;
+
+  if not isBasicAuth then
+    valid := True;
+
 end;
 
 procedure TServerContainer1.DSAuthenticationManager1UserAuthorize
@@ -102,6 +113,9 @@ begin
   if not EventObject.UserName.Equals('admin') then
     valid := false
   else
+    valid := True;
+
+  if not isBasicAuth then
     valid := True;
 end;
 

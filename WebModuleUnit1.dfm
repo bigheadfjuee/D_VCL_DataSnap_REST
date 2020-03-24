@@ -22,6 +22,9 @@ object WebModule1: TWebModule1
   Height = 333
   Width = 414
   object DSRESTWebDispatcher1: TDSRESTWebDispatcher
+    Server = ServerContainer1.DSServer1
+    AuthenticationManager = ServerContainer1.DSAuthenticationManager1
+    OnFormatResult = DSRESTWebDispatcher1FormatResult
     WebDispatch.PathInfo = 'datasnap*'
     Left = 80
     Top = 11

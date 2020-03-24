@@ -1,12 +1,13 @@
 object Form1: TForm1
   Left = 0
   Top = 0
-  Caption = 'Form1'
-  ClientHeight = 524
-  ClientWidth = 356
+  Caption = 'REST Client'
+  ClientHeight = 441
+  ClientWidth = 467
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
   DesignerMasterStyle = 0
   object ListView1: TListView
     ItemAppearanceClassName = 'TListItemAppearance'
@@ -14,70 +15,90 @@ object Form1: TForm1
     HeaderAppearanceClassName = 'TListHeaderObjects'
     FooterAppearanceClassName = 'TListHeaderObjects'
     Align = Client
-    Size.Width = 356.000000000000000000
-    Size.Height = 524.000000000000000000
+    Size.Width = 467.000000000000000000
+    Size.Height = 363.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 5
+  end
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Align = Client
+    Size.Width = 467.000000000000000000
+    Size.Height = 363.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 12
+    Viewport.Width = 463.000000000000000000
+    Viewport.Height = 359.000000000000000000
+  end
+  object Panel1: TPanel
+    Align = Bottom
+    Position.Y = 363.000000000000000000
+    Size.Width = 467.000000000000000000
+    Size.Height = 78.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 17
+    object btnExcute: TButton
+      Position.X = 24.000000000000000000
+      Position.Y = 48.000000000000000000
+      TabOrder = 12
+      Text = 'Excute'
+      OnClick = btnExcuteClick
+    end
+    object btnHTTP: TButton
+      Position.X = 128.000000000000000000
+      Position.Y = 48.000000000000000000
+      TabOrder = 13
+      Text = 'HTTP'
+      OnClick = btnHTTPClick
+    end
+    object cbeMethod: TComboEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 14
+      ItemHeight = 19.000000000000000000
+      ItemIndex = -1
+      Position.X = 24.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 409.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
   end
   object RESTClient1: TRESTClient
     Authenticator = HTTPBasicAuthenticator1
     Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
     AcceptCharset = 'UTF-8, *;q=0.8'
-    BaseURL = 
-      'http://localhost:8080/Datasnap/rest/TserverMethods1/ReverseStrin' +
-      'g/12345'
     Params = <
       item
       end>
     HandleRedirects = True
-    Left = 72
-    Top = 88
+    Left = 24
+    Top = 16
   end
   object RESTRequest1: TRESTRequest
     Client = RESTClient1
     Params = <>
     Response = RESTResponse1
     SynchronizedEvents = False
-    Left = 168
-    Top = 96
+    Left = 16
+    Top = 72
   end
   object RESTResponse1: TRESTResponse
     ContentType = 'text/html'
-    Left = 48
-    Top = 168
-  end
-  object RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter
-    Active = True
-    Dataset = ClientDataSet1
-    FieldDefs = <>
-    Response = RESTResponse1
-    Left = 160
-    Top = 208
-  end
-  object ClientDataSet1: TClientDataSet
-    PersistDataPacket.Data = {
-      6A0000009619E0BD010000001800000001000100000003000000540006726573
-      756C7402004A000000010005574944544802000200FE0101000A4348414E4745
-      5F4C4F470400820003000000010000000000000004000000040012005B002200
-      3500340033003200310022005D00}
-    Active = True
-    Aggregates = <>
-    FieldDefs = <
-      item
-        Name = 'result'
-        DataType = ftWideString
-        Size = 255
-      end>
-    IndexDefs = <>
-    Params = <>
-    StoreDefs = True
-    Left = 104
-    Top = 312
+    Left = 24
+    Top = 136
   end
   object HTTPBasicAuthenticator1: THTTPBasicAuthenticator
-    Username = 'admin'
-    Password = '1234'
-    Left = 232
-    Top = 320
+    Left = 176
+    Top = 16
+  end
+  object NetHTTPClient1: TNetHTTPClient
+    AllowCookies = True
+    HandleRedirects = True
+    UserAgent = 'Embarcadero URI Client/1.0'
+    OnAuthEvent = NetHTTPClient1AuthEvent
+    OnRequestCompleted = NetHTTPClient1RequestCompleted
+    Left = 216
+    Top = 144
   end
 end

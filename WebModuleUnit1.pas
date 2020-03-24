@@ -13,7 +13,7 @@ uses
   Datasnap.DSProxyFreePascal_iOS,
   Datasnap.DSProxyJavaScript, IPPeerServer, Datasnap.DSMetadata,
   Datasnap.DSServerMetadata, Datasnap.DSClientMetadata, Datasnap.DSCommonServer,
-  Datasnap.DSHTTP;
+  Datasnap.DSHTTP, System.JSON, Data.DBXCommon;
 
 type
   TWebModule1 = class(TWebModule)
@@ -34,6 +34,9 @@ type
       const AFileName: string; Request: TWebRequest; Response: TWebResponse;
       var Handled: Boolean);
     procedure WebModuleCreate(Sender: TObject);
+    procedure DSRESTWebDispatcher1FormatResult(Sender: TObject;
+      var ResultVal: TJSONValue; const Command: TDBXCommand;
+      var Handled: Boolean);
   private
     { Private declarations }
     FServerFunctionInvokerAction: TWebActionItem;
@@ -50,6 +53,34 @@ implementation
 {$R *.dfm}
 
 uses ServerMethodsUnit1, ServerContainerUnit1, Web.WebReq;
+
+procedure TWebModule1.DSRESTWebDispatcher1FormatResult(Sender: TObject;
+  var ResultVal: TJSONValue; const Command: TDBXCommand; var Handled: Boolean);
+var
+  JSONValue: TJSONValue;
+  temp: string;
+
+begin
+  // Tony 參考
+  // https://stackoverflow.com/questions/4824063/delphi-datasnap-framework-adding-stuff-to-json-message
+
+  // 不帶 result 結點 { "result":["1234"] } => { ["1234"] }
+  // Handled := True;
+
+  // 根據不同的方法名可以返回不同的格式
+  temp := Command.Text; // 取得 Method 名稱
+  if temp.ToUpper = UpperCase('TServerMethods1.EchoString') then
+  begin
+    Handled := True;
+    JSONValue := ResultVal;
+    ResultVal := TJSONArray(JSONValue).Get(0);
+    TJSONArray(JSONValue).Remove(0);
+    JSONValue.Free;
+
+    // 返回格式： "1234"
+  end;
+
+end;
 
 procedure TWebModule1.ServerFunctionInvokerHTMLTag(Sender: TObject; Tag: TTag;
   const TagString: string; TagParams: TStrings; var ReplaceText: string);

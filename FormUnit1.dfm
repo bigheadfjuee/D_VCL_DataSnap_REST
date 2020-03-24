@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 271
   Top = 114
-  Caption = 'Form1'
+  Caption = 'REST Server'
   ClientHeight = 235
   ClientWidth = 399
   Color = clBtnFace
@@ -56,9 +56,20 @@ object Form1: TForm1
     TabOrder = 3
     OnClick = ButtonOpenBrowserClick
   end
+  object chbBasicAuth: TCheckBox
+    Left = 200
+    Top = 8
+    Width = 97
+    Height = 17
+    Caption = 'Basic Auth'
+    Checked = True
+    State = cbChecked
+    TabOrder = 4
+    OnClick = chbBasicAuthClick
+  end
   object ApplicationEvents1: TApplicationEvents
     OnIdle = ApplicationEvents1Idle
     Left = 288
-    Top = 24
+    Top = 56
   end
 end
